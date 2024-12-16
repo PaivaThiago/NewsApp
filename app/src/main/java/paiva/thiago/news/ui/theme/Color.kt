@@ -1,4 +1,4 @@
-package paiva.thiago.bbc.news.ui.theme
+package paiva.thiago.news.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

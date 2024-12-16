@@ -1,4 +1,4 @@
-package paiva.thiago.bbc.news
+package paiva.thiago.news
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

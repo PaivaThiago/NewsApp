@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">BBC News</string>
+    <string name="app_name">Latest News</string>
+    <string name="no_content">No content available.</string>
+    <string name="no_description">No description available.</string>
+    <string name="no_article_selected">No article selected.</string>
+    <string name="error_message">Error: 1%$s</string>
+    <string name="error_generic">Unknown Error</string>
+    <string name="back">Back</string>
 </resources>

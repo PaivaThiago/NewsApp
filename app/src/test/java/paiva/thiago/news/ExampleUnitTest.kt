@@ -1,4 +1,4 @@
-package paiva.thiago.bbc.news
+package paiva.thiago.news
 
 import org.junit.Test
 

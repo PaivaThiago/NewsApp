@@ -1,7 +1,12 @@
 package paiva.thiago.news.app
 
+import android.app.Application
 import android.content.Context
+import androidx.biometric.BiometricManager
 import androidx.room.Room
+import coil.ImageLoader
+import coil.disk.DiskCache
+import coil.memory.MemoryCache
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,6 +21,7 @@ import paiva.thiago.news.data.mediator.NewsRemoteMediator
 import paiva.thiago.news.data.repository.NewsRepository
 import paiva.thiago.news.utils.BASE_URL
 import paiva.thiago.news.utils.DATABASE_NAME
+import paiva.thiago.news.utils.DISK_CACHE_DIR
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
@@ -82,5 +88,28 @@ object AppModule {
     @Singleton
     fun provideNewsRepository(dao: ArticleDAO, remoteMediator: NewsRemoteMediator): NewsRepository {
         return NewsRepository(dao, remoteMediator)
+    }
+
+    @Provides
+    fun provideBiometricManager(application: Application): BiometricManager {
+        return BiometricManager.from(application)
+    }
+
+    @Provides
+    @Singleton
+    fun provideImageLoader(@ApplicationContext context: Context): ImageLoader {
+        return ImageLoader.Builder(context)
+            .memoryCache {
+                MemoryCache.Builder(context)
+                    .maxSizePercent(0.25)
+                    .build()
+            }
+            .diskCache {
+                DiskCache.Builder()
+                    .directory(context.cacheDir.resolve(DISK_CACHE_DIR))
+                    .maxSizePercent(0.02)
+                    .build()
+            }
+            .build()
     }
 }

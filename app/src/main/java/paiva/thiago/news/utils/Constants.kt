@@ -1,7 +1,7 @@
 package paiva.thiago.news.utils
 
 // API
-const val BASE_URL = "https://newsapi.org"
+const val BASE_URL = "https://newsapi.org/"
 const val ENDPOINT_TOP_HEADLINES = "/v2/top-headlines"
 const val QUERY_PARAM_API_KEY = "apiKey"
 const val QUERY_PARAM_SOURCES = "sources"
@@ -28,3 +28,6 @@ const val LOG_TAG_NEWS_REMOTE_MEDIATOR = "NewsRemoteMediator"
 // Navigation
 const val ROUTE_HEADLINES = "headlines"
 const val ROUTE_DETAILS = "details"
+
+// Coil
+const val DISK_CACHE_DIR = "image_cache"

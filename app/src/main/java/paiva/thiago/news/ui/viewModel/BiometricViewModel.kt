@@ -18,7 +18,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class BiometricViewModel @Inject constructor(
-    private val application: Application
+    private val application: Application,
+    private val biometricManager: BiometricManager
 ) : AndroidViewModel(application) {
 
     private val _biometricState = MutableStateFlow<BiometricState>(BiometricState.CheckingSupport)
@@ -41,41 +42,27 @@ class BiometricViewModel @Inject constructor(
         checkBiometricSupport()
     }
 
-    private fun checkBiometricSupport() {
-        val biometricManager = BiometricManager.from(getApplication())
+    fun checkBiometricSupport() {
         viewModelScope.launch {
-            when (biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG or BiometricManager.Authenticators.DEVICE_CREDENTIAL)) {
-                BiometricManager.BIOMETRIC_SUCCESS -> {
-                    _biometricState.value = BiometricState.BiometricSupported
-                }
-                BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE -> {
-                    _biometricState.value = BiometricState.BiometricNotSupported
-                    Log.d(LOG_TAG_BIOMETRIC, application.getString(R.string.biometric_error_hardware_not_found))
-                }
-                BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE -> {
-                    _biometricState.value = BiometricState.BiometricNotSupported
-                    Log.d(LOG_TAG_BIOMETRIC, application.getString(R.string.biometric_error_hardware_not_available))
-                }
-                BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> {
-                    _biometricState.value = BiometricState.BiometricNotEnrolled
-                    Log.d(LOG_TAG_BIOMETRIC, application.getString(R.string.biometric_error_no_fingerprint_enrolled))
-                }
-                BiometricManager.BIOMETRIC_ERROR_SECURITY_UPDATE_REQUIRED -> {
-                    val error = application.getString(R.string.biometric_error_update_required)
-                    _biometricState.value = BiometricState.BiometricError(error)
-                    Log.d(LOG_TAG_BIOMETRIC, error)
-                }
-                BiometricManager.BIOMETRIC_ERROR_UNSUPPORTED -> {
-                    _biometricState.value = BiometricState.BiometricNotSupported
-                    Log.d(LOG_TAG_BIOMETRIC, application.getString(R.string.biometric_error_not_supported))
-                }
-                BiometricManager.BIOMETRIC_STATUS_UNKNOWN -> {
-                    val error = application.getString(R.string.biometric_error_unknown)
-                    _biometricState.value = BiometricState.BiometricError(error)
-                    Log.d(LOG_TAG_BIOMETRIC, error)
-                }
+            val result = biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG or BiometricManager.Authenticators.DEVICE_CREDENTIAL)
+            when (result) {
+                BiometricManager.BIOMETRIC_SUCCESS -> _biometricState.value = BiometricState.BiometricSupported
+                else -> handleBiometricError(result)
             }
         }
+    }
+
+    private fun handleBiometricError(errorCode: Int) {
+        val message = when (errorCode) {
+            BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE -> application.getString(R.string.biometric_error_hardware_not_found)
+            BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE -> application.getString(R.string.biometric_error_hardware_not_available)
+            BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> application.getString(R.string.biometric_error_no_fingerprint_enrolled)
+            BiometricManager.BIOMETRIC_ERROR_SECURITY_UPDATE_REQUIRED -> application.getString(R.string.biometric_error_update_required)
+            BiometricManager.BIOMETRIC_ERROR_UNSUPPORTED -> application.getString(R.string.biometric_error_not_supported)
+            else -> application.getString(R.string.biometric_error_unknown)
+        }
+        _biometricState.value = BiometricState.BiometricError(message)
+        Log.d(LOG_TAG_BIOMETRIC, message)
     }
 
     fun authenticateUser(activity: FragmentActivity) {

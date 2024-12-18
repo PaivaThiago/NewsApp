@@ -16,9 +16,9 @@ android {
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
 
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "API_KEY", "\"8dbee7204c074ca3a11fd0c1da39168a\"")
     }
 
@@ -63,7 +63,6 @@ android {
 }
 
 dependencies {
-
     // Android libraries
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.core.ktx)
@@ -77,13 +76,11 @@ dependencies {
     // Compose
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.foundation)
-    implementation(libs.androidx.material)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     debugImplementation(libs.androidx.ui.tooling)
-    debugImplementation(libs.androidx.ui.test.manifest)
 
     // Retrofit
     implementation(libs.squareup.converter.moshi)
@@ -100,8 +97,8 @@ dependencies {
 
     // Hilt
     implementation(libs.androidx.hilt.navigation.compose)
-    implementation(libs.google.dagger.hilt.android)
-    ksp(libs.google.dagger.hilt.compiler)
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler)
 
     // Room
     implementation(libs.androidx.room.runtime)
@@ -117,9 +114,15 @@ dependencies {
     implementation(libs.androidx.biometric.ktx)
 
     // Testing
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.ui.test.junit4)
+    testImplementation (libs.androidx.paging.common)
+    testImplementation (libs.junit)
+    testImplementation (libs.kotlinx.coroutines.test)
+    testImplementation (libs.mockito.inline)
+    testImplementation (libs.mockito.kotlin)
+    testImplementation (libs.truth)
+    androidTestImplementation (libs.androidx.core.testing)
+    androidTestImplementation (platform(libs.androidx.compose.bom))
+    androidTestImplementation (libs.androidx.junit)
+    androidTestImplementation (libs.androidx.runner)
+    androidTestImplementation (libs.androidx.ui.test.junit4)
 }

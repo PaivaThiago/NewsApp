@@ -48,6 +48,8 @@ import coil.compose.AsyncImage
 import paiva.thiago.news.R
 import paiva.thiago.news.data.model.Article
 import paiva.thiago.news.ui.viewModel.NewsViewModel
+import paiva.thiago.news.utils.ROUTE_DETAILS
+import paiva.thiago.news.utils.ROUTE_HEADLINES
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -62,7 +64,7 @@ fun NewsApp() {
             CenterAlignedTopAppBar(
                 title = { Text(text = stringResource(R.string.app_name)) },
                 navigationIcon = {
-                    if (currentRoute == "details") {
+                    if (currentRoute == ROUTE_DETAILS) {
                         IconButton(onClick = { navController.navigateUp() }) {
                             Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.back))
                         }
@@ -78,18 +80,18 @@ fun NewsApp() {
                     .fillMaxSize()
                     .padding(paddingValues)
             ) {
-                NavHost(navController = navController, startDestination = "headlines") {
-                    composable("headlines") {
+                NavHost(navController = navController, startDestination = ROUTE_HEADLINES) {
+                    composable(ROUTE_HEADLINES) {
                         HeadlinesList(
                             headlines = newsViewModel.pagingData.collectAsLazyPagingItems(),
                             onHeadlineClick = { article ->
                                 newsViewModel.onHeadlineClicked(article)
-                                navController.navigate("details")
+                                navController.navigate(ROUTE_DETAILS)
                             }
                         )
                     }
 
-                    composable("details") {
+                    composable(ROUTE_DETAILS) {
                         val selectedArticle = newsViewModel.selectedArticle
                         if (selectedArticle != null) {
                             ArticleDetailsScreen(article = selectedArticle)
@@ -163,7 +165,7 @@ fun ListError(onRetry: () -> Unit) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Button(onClick = { onRetry() }) {
-            Text("Retry")
+            Text(stringResource(R.string.retry))
         }
     }
 }

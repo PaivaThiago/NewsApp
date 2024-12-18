@@ -3,9 +3,10 @@ package paiva.thiago.news.data.database.entity
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import paiva.thiago.news.data.model.Article
+import paiva.thiago.news.utils.TABLE_ARTICLES
 import java.time.ZonedDateTime
 
-@Entity(tableName = "articles")
+@Entity(tableName = TABLE_ARTICLES)
 data class ArticleEntity(
     @PrimaryKey val title: String,
     val imageUrl: String?,

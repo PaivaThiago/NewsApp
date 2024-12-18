@@ -6,4 +6,15 @@
     <string name="error_message">Error: 1%$s</string>
     <string name="error_generic">Unknown Error</string>
     <string name="back">Back</string>
+    <string name="biometric_title">Biometric Authentication</string>
+    <string name="biometric_subtitle">Authenticate with your fingerprint</string>
+    <string name="cancel">Cancel</string>
+    <string name="biometric_error_hardware_not_found">No biometric hardware found.</string>
+    <string name="biometric_error_hardware_not_available">Biometric hardware is currently unavailable.</string>
+    <string name="biometric_error_no_fingerprint_enrolled">No fingerprints enrolled. Please enroll fingerprints in device settings.</string>
+    <string name="biometric_error_update_required">Security update required.</string>
+    <string name="biometric_error_unknown">Unknown biometric state.</string>
+    <string name="biometric_error_not_supported">Biometrics not supported on this device.</string>
+    <string name="biometric_error_authentication">Authentication Failed</string>
+    <string name="retry">Retry</string>
 </resources>

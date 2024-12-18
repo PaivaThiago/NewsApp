@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import paiva.thiago.news.data.model.Article
 import paiva.thiago.news.data.repository.NewsRepository
+import paiva.thiago.news.utils.TIMEOUT
 import javax.inject.Inject
 
 @HiltViewModel
@@ -20,7 +21,7 @@ class NewsViewModel @Inject constructor(
         .cachedIn(viewModelScope)
         .stateIn(
             scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5000),
+            started = SharingStarted.WhileSubscribed(TIMEOUT),
             initialValue = PagingData.empty()
         )
 

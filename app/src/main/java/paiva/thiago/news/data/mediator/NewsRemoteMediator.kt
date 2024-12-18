@@ -12,6 +12,7 @@ import paiva.thiago.news.data.api.NewsApi
 import paiva.thiago.news.data.database.NewsDatabase
 import paiva.thiago.news.data.database.entity.ArticleEntity
 import paiva.thiago.news.data.database.entity.RemoteKeys
+import paiva.thiago.news.utils.LOG_TAG_NEWS_REMOTE_MEDIATOR
 import paiva.thiago.news.utils.STARTING_PAGE_INDEX
 import retrofit2.HttpException
 import javax.inject.Inject
@@ -78,10 +79,10 @@ class NewsRemoteMediator @Inject constructor(
 
             return MediatorResult.Success(endOfPaginationReached = endOfPaginationReached)
         } catch (exception: IOException) {
-            Log.e("NewsRemoteMediator", "Network error: ${exception.localizedMessage}")
+            Log.e(LOG_TAG_NEWS_REMOTE_MEDIATOR, "Network error: ${exception.localizedMessage}")
             return MediatorResult.Error(exception)
         } catch (exception: HttpException) {
-            Log.e("NewsRemoteMediator", "HTTP error: ${exception.localizedMessage}")
+            Log.e(LOG_TAG_NEWS_REMOTE_MEDIATOR, "HTTP error: ${exception.localizedMessage}")
             return MediatorResult.Error(exception)
         }
     }

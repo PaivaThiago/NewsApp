@@ -33,6 +33,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -44,7 +45,9 @@ import androidx.navigation.compose.rememberNavController
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import coil.ImageLoader
 import coil.compose.AsyncImage
+import coil.imageLoader
 import paiva.thiago.news.R
 import paiva.thiago.news.data.model.Article
 import paiva.thiago.news.ui.viewModel.NewsViewModel
@@ -189,11 +192,14 @@ fun ArticleItem(article: Article, onClick: () -> Unit) {
 
 @Composable
 fun ArticleImage(article: Article, modifier: Modifier = Modifier) {
+    val imageLoader: ImageLoader = LocalContext.current.imageLoader
+
     AsyncImage(
         model = article.imageUrl,
         contentDescription = null,
         placeholder = painterResource(R.drawable.ic_placeholder),
         error = painterResource(R.drawable.ic_broken_image),
+        imageLoader = imageLoader,
         modifier = modifier
     )
 }

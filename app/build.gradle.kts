@@ -16,9 +16,9 @@ android {
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
 
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "API_KEY", "\"8dbee7204c074ca3a11fd0c1da39168a\"")
     }
 
@@ -77,7 +77,6 @@ dependencies {
     // Compose
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.foundation)
-    implementation(libs.androidx.material)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
@@ -117,9 +116,32 @@ dependencies {
     implementation(libs.androidx.biometric.ktx)
 
     // Testing
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
+    testImplementation (libs.androidx.core.testing)
+    testImplementation (libs.androidx.junit.ktx)
+    testImplementation (libs.androidx.room.testing)
+    testImplementation (libs.androidx.paging.common)
+    testImplementation (libs.androidx.paging.testing)
+    testImplementation (libs.app.turbine)
+    testImplementation (libs.byte.buddy.android.test)
+    testImplementation (libs.google.dagger.hilt.android.testing)
+    testImplementation (libs.hamcrest)
+    testImplementation (libs.junit)
+    testImplementation (libs.kotlinx.coroutines.test)
+    testImplementation (libs.mockito.core)
+    testImplementation (libs.mockito.kotlin)
+    testImplementation (libs.truth)
+    kspTest (libs.google.dagger.hilt.compiler)
+
+    androidTestImplementation (libs.androidx.core.testing)
+    androidTestImplementation (libs.androidx.junit)
+    androidTestImplementation (libs.androidx.runner)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
+    androidTestImplementation (libs.google.dagger.hilt.android.testing)
+    androidTestImplementation (libs.kotlinx.coroutines.test)
+    androidTestImplementation (libs.mockito.core)
+    androidTestImplementation (libs.mockito.kotlin)
+    testImplementation (libs.truth)
+    kspAndroidTest (libs.google.dagger.hilt.compiler)
 }
